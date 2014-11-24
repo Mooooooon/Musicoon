@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Muscioon</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="back">
+    <div class="container">
+        <div class="player">
+            <div class="cd">
+                <div class="out">
+                </div>
+                <div id="album" class="album">
+                </div>
+                <div id="in" class="in">
+                </div>
+            </div>
+            <div class="action">
+                <a href="javascript:m_play()"><img id="m_play" src="images/play.png"></a>
+                <input id="range" type="range" min="0" max="10" value="5" onchange="volume(this.value)">
+                <a href="javascript:next_music()"><img id="next_music" src="images/forward.png"></a>
+            </div>
+            <audio id="player">
+            </audio>
+        </div>
+    </div>
+</div>
+<script src="js/jquery-1.11.1.min.js"></script>
+<script>
+    oAudio = document.getElementById('player');
+    btn = $("#m_play");
+    album = $("#album");
+    inn = $("#in");
+
+    $(document).ready(function () {
+        $.get("player.php", function (data) {
+            mp3_info = JSON.parse(data);
+            $("#player").attr("src", mp3_info.mp3);
+            $("#album").css("background-image", "url('" + mp3_info.cover + "')");
+        });
+        oAudio.volume = 0.5;
+    });
+
+    $("#player").bind("ended", function () {
+        next_music();
+    });
+
+    function m_play() {
+        if (oAudio.paused) {
+            oAudio.play();
+            btn.attr("src", "images/pause.png");
+            album.addClass("roll");
+            inn.addClass("roll");
+        }
+        else {
+            oAudio.pause();
+            btn.attr("src", "images/play.png");
+            album.removeClass("roll");
+            inn.removeClass("roll");
+        }
+    }
+
+    function next_music() {
+        album.removeClass("roll");
+        inn.removeClass("roll");
+        load_music();
+        btn.attr("src", "images/pause.png");
+        album.addClass("roll");
+        inn.addClass("roll");
+    }
+
+    function load_music() {
+        $.get("player.php", function (data) {
+            mp3_info = JSON.parse(data);
+            $("#player").attr("src", mp3_info.mp3);
+            $("#album").css("background-image", "url('" + mp3_info.cover + "')");
+            oAudio.play();
+        });
+    }
+
+    function volume(vol) {
+        oAudio.volume = vol / 10;
+    }
+</script>
+</body>
+</html>
