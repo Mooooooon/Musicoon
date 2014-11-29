@@ -115,8 +115,8 @@ if (isset($lrc_info["lrc"]["lyric"])) {
             $col_text = end($row);
             array_pop($row);
             foreach ($row as $key) {
-                $time = substr($key, 1);
-                $time = strtotime('1970-1-1 01:' . $time);
+                $time = explode(":", substr($key, 1));
+                $time = $time[0] * 60 + $time[1];
                 $play_info["lrc"][$time] = $col_text;
             }
         }
