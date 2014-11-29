@@ -34,6 +34,12 @@ function get_music_info($music_id)
     return curl_get($url);
 }
 
+function get_music_lyric($music_id)
+{
+    $url = "http://music.163.com/api/song/lyric?os=pc&id=" . $music_id . "&lv=-1&kv=-1&tv=-1";
+    return curl_get($url);
+}
+
 function rand_music()
 {
     global $player_list;
@@ -58,7 +64,7 @@ function get_music_id()
             $id = rand_music();
         }
         if (count($played) >= $sum) {
-            array_splice($played, 0, 1);
+            array_shift($played);
         }
     }
     $played[] = $id;
@@ -77,10 +83,45 @@ foreach ($playlist_list as $key) {
     }
 }
 
+//获取数据
 $id = get_music_id();
 $music_info = json_decode(get_music_info($id), true);
+$lrc_info = json_decode(get_music_lyric($id), true);
+
+//处理音乐信息
 $play_info["cover"] = $music_info["songs"][0]["album"]["picUrl"];
 $play_info["mp3"] = $music_info["songs"][0]["mp3Url"];
 $play_info["mp3"] = str_replace("http://m", "http://p", $play_info["mp3"]);
+$play_info["music_name"] = $music_info["songs"][0]["name"];
+foreach ($music_info["songs"][0]["artists"] as $key) {
+    if (!isset($play_info["artists"])) {
+        $play_info["artists"] = $key["name"];
+    } else {
+        $play_info["artists"] .= "," . $key["name"];
+    }
+}
 
+//处理歌词
+if (isset($lrc_info["lrc"]["lyric"])) {
+    $lrc = explode("\n", $lrc_info["lrc"]["lyric"]);
+    array_pop($lrc);
+    foreach ($lrc as $rows) {
+        $row = explode("]", $rows);
+        if (count($row) == 1) {
+            $play_info["lrc"] = "no";
+            break;
+        } else {
+            $lyric = [];
+            $col_text = end($row);
+            array_pop($row);
+            foreach ($row as $key) {
+                $time = substr($key, 1);
+                $time = strtotime('1970-1-1 01:' . $time);
+                $play_info["lrc"][$time] = $col_text;
+            }
+        }
+    }
+} else {
+    $play_info["lrc"] = "no";
+}
 echo json_encode($play_info);

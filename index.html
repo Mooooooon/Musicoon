@@ -9,7 +9,7 @@
 <div class="back">
     <div class="container">
         <div class="player">
-            <div class="cd">
+            <div id="cd" class="cd">
                 <div class="out">
                 </div>
                 <div id="album" class="album">
@@ -22,25 +22,45 @@
                 <input id="range" type="range" min="0" max="10" value="5" onchange="volume(this.value)">
                 <a href="javascript:next_music()"><img id="next_music" src="images/forward.png"></a>
             </div>
-            <audio id="player">
-            </audio>
+            <div class="info">
+                <span id="music_name"></span><span id="artist"></span>
+            </div>
+            <div id="lrc" class="lrc">
+            </div>
         </div>
     </div>
 </div>
+<audio id="player">
+</audio>
 <script src="js/jquery-1.11.1.min.js"></script>
 <script>
     oAudio = document.getElementById('player');
     btn = $("#m_play");
     album = $("#album");
     inn = $("#in");
-
+    music_name = $("#music_name");
+    artist = $("#artist");
+    cd = $("#cd");
+    lrc_row = $("#lrc");
     $(document).ready(function () {
+        cd_size();
         $.get("player.php", function (data) {
             mp3_info = JSON.parse(data);
             $("#player").attr("src", mp3_info.mp3);
-            $("#album").css("background-image", "url('" + mp3_info.cover + "')");
+            album.css("background-image", "url('" + mp3_info.cover + "')");
+            music_name.html(mp3_info.music_name);
+            artist.html(mp3_info.artists);
+            if (mp3_info.lrc != "no") {
+                lrc = mp3_info.lrc;
+            } else {
+                lrc = undefined;
+            }
         });
         oAudio.volume = 0.5;
+    });
+
+    $(window).resize(function () {
+        cd_size();
     });
 
     $("#player").bind("ended", function () {
@@ -53,35 +73,58 @@
             btn.attr("src", "images/pause.png");
             album.addClass("roll");
             inn.addClass("roll");
+            lrc_interval = setInterval("display_lrc()", 1000);
         }
         else {
             oAudio.pause();
             btn.attr("src", "images/play.png");
             album.removeClass("roll");
             inn.removeClass("roll");
+            setInterval("display_lrc()", 1000);
         }
     }
 
     function next_music() {
+        oAudio.pause();
         album.removeClass("roll");
         inn.removeClass("roll");
         load_music();
         btn.attr("src", "images/pause.png");
-        album.addClass("roll");
-        inn.addClass("roll");
     }
 
     function load_music() {
         $.get("player.php", function (data) {
             mp3_info = JSON.parse(data);
             $("#player").attr("src", mp3_info.mp3);
-            $("#album").css("background-image", "url('" + mp3_info.cover + "')");
+            album.css("background-image", "url('" + mp3_info.cover + "')");
+            music_name.html(mp3_info.music_name);
+            artist.html(mp3_info.artists);
             oAudio.play();
+            album.addClass("roll");
+            inn.addClass("roll");
+            lrc_row.html("");
+            if (mp3_info.lrc != "no") {
+                lrc = mp3_info.lrc;
+                setInterval("display_lrc()", 1000);
+            } else {
+                lrc = undefined;
+                clearInterval(lrc_interval);
+            }
         });
     }
 
     function volume(vol) {
         oAudio.volume = vol / 10;
+    }
+
+    function cd_size() {
+        cd_height = cd.height();
+        cd.css("width", cd_height);
+    }
+
+    function display_lrc() {
+        play_time = Math.floor(oAudio.currentTime).toString();
+        lrc_row.html(lrc[play_time]);
     }
 </script>
 </body>
