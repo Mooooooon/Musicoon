@@ -342,6 +342,7 @@ html, body {
 
 .action img {
     height: 100%;
+    width: 1.75vh;
 }
 
 #range {
