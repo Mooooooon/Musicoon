@@ -111,7 +111,7 @@ if (isset($lrc_info["lrc"]["lyric"])) {
             $play_info["lrc"] = "no";
             break;
         } else {
-            $lyric = [];
+            $lyric = array();
             $col_text = end($row);
             array_pop($row);
             foreach ($row as $key) {

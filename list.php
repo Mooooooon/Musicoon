@@ -7,12 +7,12 @@
  */
 
 #歌单ID
-$playlist_list = [
+$playlist_list = array(
     "22320356",
     "369792",
-];
+);
 #单曲ID
-$player_list = [
+$player_list = array(
     "27602841",
     "28870240",
     "28773824",
@@ -37,4 +37,4 @@ $player_list = [
     "17115765",
     "859516",
     "4164331",
-];
+);
