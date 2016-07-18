@@ -1,38 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
-    <title>Muscioon</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <title>ZzzFM - Music is Everlasting</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="ZzzFM">
+    <meta name="description" content="Music is Everlasting">
+    <link rel="stylesheet" href="vendor/font-awesome.min.css">
+    <link rel="stylesheet" href="bundle/app.css">
 </head>
+
 <body>
-<div class="back">
-    <div class="container">
-        <div class="player">
-            <div id="cd" class="cd">
-                <div class="out">
-                </div>
-                <div id="album" class="album">
-                </div>
-                <div id="in" class="in">
-                </div>
-            </div>
-            <div class="action">
-                <a href="javascript:m_play()"><img id="m_play" src="images/play.png"></a>
-                <input id="range" type="range" min="0" max="10" value="5" onchange="volume(this.value)">
-                <a href="javascript:next_music()"><img id="next_music" src="images/forward.png"></a>
-            </div>
-            <div class="info">
-                <span id="music_name"></span><span id="artist"></span>
-            </div>
-            <div id="lrc" class="lrc">
-            </div>
+
+<article>
+    <aside id="backdrop"></aside>
+    <ul id="controller">
+        <li class="item"><a class="fa-button home"><i class="fa fa-home" title="Home"></i></a></li>
+        <li class="item"><a class="fa-button next"><i class="fa fa-chevron-right" title="Next"></i></a></li>
+    </ul>
+    <article id="topic">
+        <div id="cover">
+            <div class="lower"><img src="image/album.jpg"></div>
+            <div class="upper"><i class="fa fa-play"></i></div>
         </div>
-    </div>
-</div>
-<audio id="player">
-</audio>
-<script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
-<script src="js/player.js" type="text/javascript"></script>
+        <div id="progress"><div class="elapsed"></div></div>
+        <div id="detail">
+            <div class="title">音乐标题</div>
+            <div class="artist">歌手</div>
+        </div>
+    </article>
+</article>
+
+<script src="vendor/jquery-3.1.0.min.js"></script>
+<script src="bundle/app.js"></script>
+
 </body>
 </html>

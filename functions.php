@@ -1,11 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Moon
- * Date: 2014/11/26 0026
- * Time: 2:06
- * Url: http://moonlib.com/606.html
- */
+
 function curl_get($url)
 {
     $refer = "http://music.163.com/";
@@ -24,17 +18,17 @@ function curl_get($url)
 function music_search($word, $type)
 {
     $url = "http://music.163.com/api/search/pc";
-    $post_data = array(
-        's' => $word,
-        'offset' => '0',
-        'limit' => '20',
-        'type' => $type,
-    );
+    $post_data = [
+        "s"      => $word,
+        "offset" => "0",
+        "limit"  => "20",
+        "type"   => $type,
+    ];
     $referrer = "http://music.163.com/";
     $URL_Info = parse_url($url);
     $values = [];
-    $result = '';
-    $request = '';
+    $result = "";
+    $request = "";
     foreach ($post_data as $key => $value) {
         $values[] = "$key=" . urlencode($value);
     }
@@ -102,10 +96,34 @@ function get_mv_info()
     return curl_get($url);
 }
 
-#echo music_search("Moon Without The Stars", "1");
-#get_music_info("28949444");
-#echo get_artist_album("166009", "5");
-#echo get_album_info("3021064");
-#echo get_playlist_info("22320356");
-#echo get_music_lyric("29567020");
-#echo get_mv_info();
+function rand_music()
+{
+    global $song;
+    $sum = count($song);
+    $id = $song[rand(0, $sum - 1)];
+    return $id;
+}
+
+function get_music_id()
+{
+    $played = isset($_COOKIE["played"]) ? json_decode($_COOKIE["played"]) : null;
+    $id = rand_music();
+    if ($played != null) {
+        global $song;
+        $sum = count($song);
+        if ($sum >= 2) {
+            $sum = $sum * 0.5;
+        } else {
+            $sum -= 1;
+        }
+        while (in_array($id, $played)) {
+            $id = rand_music();
+        }
+        if (count($played) >= $sum) {
+            array_shift($played);
+        }
+    }
+    $played[] = $id;
+    setcookie("played", json_encode($played), time() + 3600);
+    return $id;
+}
