@@ -90,9 +90,9 @@ function get_music_lyric($music_id)
     return curl_get($url);
 }
 
-function get_mv_info()
+function get_mv_info($mv_id)
 {
-    $url = "http://music.163.com/api/mv/detail?id=319104&type=mp4";
+    $url = "http://music.163.com/api/mv/detail/?id=" . $mv_id . "&type=mp4";
     return curl_get($url);
 }
 
