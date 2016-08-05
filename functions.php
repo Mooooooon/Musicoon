@@ -95,35 +95,3 @@ function get_mv_info($mv_id)
     $url = "http://music.163.com/api/mv/detail/?id=" . $mv_id . "&type=mp4";
     return curl_get($url);
 }
-
-function rand_music()
-{
-    global $song;
-    $sum = count($song);
-    $id = $song[rand(0, $sum - 1)];
-    return $id;
-}
-
-function get_music_id()
-{
-    $played = isset($_COOKIE["played"]) ? json_decode($_COOKIE["played"]) : null;
-    $id = rand_music();
-    if ($played != null) {
-        global $song;
-        $sum = count($song);
-        if ($sum >= 2) {
-            $sum = $sum * 0.5;
-        } else {
-            $sum -= 1;
-        }
-        while (in_array($id, $played)) {
-            $id = rand_music();
-        }
-        if (count($played) >= $sum) {
-            array_shift($played);
-        }
-    }
-    $played[] = $id;
-    setcookie("played", json_encode($played), time() + 3600);
-    return $id;
-}
