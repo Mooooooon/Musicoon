@@ -91,6 +91,7 @@ class MusicAPI
     {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_ENCODING, "gzip");
         if ($data) {
             if (is_array($data)) $data = http_build_query($data);
             curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
