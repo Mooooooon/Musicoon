@@ -7,7 +7,7 @@ html {
 
 body {
     margin: 0;
-    font-size: 1em;
+    font-size: 1rem;
     font-family: "Helvetica Neue", "Segoe UI", Arial, "Hiragino Sans GB", "STXiHei", "Microsoft JhengHei", sans-serif;
 }
 
@@ -66,7 +66,7 @@ template {
         right: 0;
         bottom: 0;
         left: 0;
-        background: url("../image/backdrop.png") no-repeat center;
+        background: url("../images/backdrop.png") no-repeat center;
         background-size: cover;
         pointer-events: none;
         z-index: -1;
@@ -108,12 +108,12 @@ template {
     text-align: center;
 }
 
-#topic {
+#showcase {
     margin: 0.5em;
     padding-top: 10%;
 }
 
-#cover {
+#surface {
     position: relative;
     margin-left: auto;
     margin-right: auto;
@@ -124,7 +124,7 @@ template {
     user-select: none;
 }
 
-#cover .lower {
+#surface .cover {
     padding-bottom: 100%;
     max-width: 100%;
     width: 100%;
@@ -138,17 +138,17 @@ template {
     animation-play-state: paused;
 }
 
-#cover[data-running="true"] .lower {
+#surface[data-running="true"] .cover {
     -webkit-animation-play-state: running;
     animation-play-state: running;
 }
 
-#cover img {
+#surface img {
     max-width: 100%;
     width: 100%;
 }
 
-#cover .upper {
+#surface .magic {
     position: absolute;
     top: 0;
     right: 0;
@@ -164,25 +164,25 @@ template {
     z-index: 10;
 }
 
-#cover .upper:hover {
+#surface .magic:hover {
     opacity: 1;
 }
 
-#cover .upper::after {
+#surface .magic::after {
     content: "";
     display: inline-block;
     vertical-align: middle;
     min-height: 100%;
 }
 
-#cover .upper .fa {
+#surface .magic .fa {
     display: inline-block;
     vertical-align: middle;
     font-size: 3.5rem;
     color: rgba(255, 255, 255, 0.8);
 }
 
-#progress {
+#thread {
     margin-top: 2em;
     margin-left: auto;
     margin-right: auto;
@@ -191,7 +191,7 @@ template {
     background-color: #e5e9ef;
 }
 
-#progress .elapsed {
+#thread .elapsed {
     width: 0;
     height: 100%;
     background-color: #666;
@@ -205,20 +205,20 @@ template {
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
-#detail .title {
+#detail .name {
     margin-bottom: 0.1em;
     font-size: 1.25em;
     color: #555;
 }
 
-#detail .artist {
+#detail .artists {
     margin-bottom: 0.2em;
     font-size: 1.15em;
     color: #666;
 }
 
-#detail .title::before { content: "\300c"; }
-#detail .title::after { content: "\300d"; }
+#detail .name::before { content: "\300c"; }
+#detail .name::after { content: "\300d"; }
 
 
 @-webkit-keyframes rotate {
