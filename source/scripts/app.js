@@ -211,7 +211,7 @@ jQuery(document).ready(function ($) {
         },
 
         getImagePackage: function (picUrl) {
-            return picUrl + '?' + this.config.thumbnail + 'y' + this.config.thumbnail;
+            return picUrl + '?param=' + this.config.thumbnail + 'y' + this.config.thumbnail;
         },
 
         /**
