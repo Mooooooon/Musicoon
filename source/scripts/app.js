@@ -148,11 +148,12 @@ jQuery(document).ready(function ($) {
         getHyperIDs: function (id, isRecursion) {
             var deferred = null;
             var index = this.data.cacheIDs.indexOf(this.data.id);
-            var result = typeof id === 'number' ? [id] : this.data.cacheIDs.slice(index + 1, index + 2);
+            var result = typeof id === 'number' ? id : this.data.cacheIDs[index + 1];
 
             !isRecursion && (this.recursion.startType = this.data.type);
 
-            if (result.length) {
+            if (result) {
+                this.data.id = result;
                 this.setRecursionCheck(false);
                 this.loadMusicInfo(result);
             } else {
@@ -194,19 +195,21 @@ jQuery(document).ready(function ($) {
         renderAudio: function (song) {
             if ($.isPlainObject(song)) {
                 if (song['url']) {
+                    this.tried = 0;
                     this.domNodes.img.src = this.getImagePackage(song['album']['picUrl']);
                     this.domNodes.name.textContent = song['name'];
                     this.domNodes.artists.textContent = song['artists'];
                     this.audio.src = song['url'];
                     this.audio.sourcePointer = song;
-                    this.data.id = song['id'];
                     this.playAudio();
                 } else {
-                    this.tried++ < this.config.retry && this.nextTrack();
+                    this.tried++ < this.config.retry ? this.nextTrack() : this.tried = 0;
                     console.info('Continuity Count Error:', this.tried);
                 }
             } else {
                 console.warn('Invalid Song Data');
+                this.tried++ < this.config.retry ? this.nextTrack() : this.tried = 0;
+                console.info('Continuity Count Error:', this.tried);
             }
         },
 
