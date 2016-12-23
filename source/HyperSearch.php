@@ -95,7 +95,7 @@ class HyperSearch
         $code = isset($raw['code']) ? $raw['code'] : self::FAIL_CODE;
         if ($code == self::DONE_CODE) {
             foreach ($raw['hotSongs'] as $song) {
-                $data[] = $song['id'];
+                array_unshift($data, $song['id']);
             }
         }
         return json_encode([
@@ -115,7 +115,7 @@ class HyperSearch
         $code = isset($raw['code']) ? $raw['code'] : self::FAIL_CODE;
         if ($code == self::DONE_CODE) {
             foreach ($raw['songs'] as $song) {
-                $data[] = $song['id'];
+                array_unshift($data, $song['id']);
             }
         }
         return json_encode([
@@ -135,7 +135,7 @@ class HyperSearch
         $code = isset($raw['code']) ? $raw['code'] : self::FAIL_CODE;
         if ($code == self::DONE_CODE) {
             foreach ($raw['playlist']['tracks'] as $song) {
-                $data[] = $song['id'];
+                array_unshift($data, $song['id']);
             }
         }
         return json_encode([
