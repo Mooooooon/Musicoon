@@ -318,7 +318,7 @@ jQuery(document).ready(function ($) {
             var rest = this.audio.duration - this.audio.currentTime; // Maybe `NaN`
             var minExpire = this.audio.duration || 120;
             var expire = song['expire'] < minExpire ? this.config.expire : song['expire'];
-            var isExpire = time - song['timestamp'] + Math.ceil(rest || 0) > expire;
+            var isExpire = Math.ceil(rest) < expire && time - song['timestamp'] + Math.ceil(rest || 0) > expire;
 
             // NO risk of recursion
             if (isExpire) {
