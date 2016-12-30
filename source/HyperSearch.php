@@ -26,8 +26,8 @@ class HyperSearch
     {
         $data = [];
         $timestamp = time();
-        $urls = json_decode($this->API->get_url($song_ids, $this->BR_CODE), true);
-        $details = json_decode($this->API->get_detail($song_ids), true);
+        $urls = json_decode($this->API->get_url($song_ids, $this->BR_CODE), true, 512, JSON_BIGINT_AS_STRING);
+        $details = json_decode($this->API->get_detail($song_ids), true, 512, JSON_BIGINT_AS_STRING);
         $urls_code = isset($urls['code']) ? $urls['code'] : self::FAIL_CODE;
         $details_code = isset($details['code']) ? $details['code'] : self::FAIL_CODE;
         $code = self::FAIL_CODE;
@@ -91,7 +91,7 @@ class HyperSearch
     protected function get_artist_limit($artist_id)
     {
         $data = [];
-        $raw = json_decode($this->API->get_artist($artist_id), true);
+        $raw = json_decode($this->API->get_artist($artist_id), true, 512, JSON_BIGINT_AS_STRING);
         $code = isset($raw['code']) ? $raw['code'] : self::FAIL_CODE;
         if ($code == self::DONE_CODE) {
             foreach ($raw['hotSongs'] as $song) {
@@ -111,7 +111,7 @@ class HyperSearch
     protected function get_album_limit($album_id)
     {
         $data = [];
-        $raw = json_decode($this->API->get_album($album_id), true);
+        $raw = json_decode($this->API->get_album($album_id), true, 512, JSON_BIGINT_AS_STRING);
         $code = isset($raw['code']) ? $raw['code'] : self::FAIL_CODE;
         if ($code == self::DONE_CODE) {
             foreach ($raw['songs'] as $song) {
@@ -131,7 +131,7 @@ class HyperSearch
     protected function get_playlist_limit($playlist_id)
     {
         $data = [];
-        $raw = json_decode($this->API->get_playlist($playlist_id), true);
+        $raw = json_decode($this->API->get_playlist($playlist_id), true, 512, JSON_BIGINT_AS_STRING);
         $code = isset($raw['code']) ? $raw['code'] : self::FAIL_CODE;
         if ($code == self::DONE_CODE) {
             foreach ($raw['playlist']['tracks'] as $song) {

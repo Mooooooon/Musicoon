@@ -17,7 +17,7 @@ Music is Everlasting
 #### 配置需求
 
 - 服务器在中国大陆
-- PHP 5.4（64-bit）或以上版本并且支持 cURL
+- PHP 5.4 或以上版本并且支持 cURL
 
 
 ### Thanks
