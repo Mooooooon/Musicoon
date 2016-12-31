@@ -26,6 +26,7 @@ jQuery(document).ready(function ($) {
         };
         this.recursion = {
             currentTime: null,
+            requestID: null,
             startType: null,
             needCheck: false
         };
@@ -36,6 +37,7 @@ jQuery(document).ready(function ($) {
             doneCode: 200,
             thumbnail: 360,
             localName: 'ZzzFM.logger',
+            localAlbum: 'images/album.jpg',
             source: 'https://github.com/Aqours/ZzzFM',
             interface: 'request.php',
             audioMisc: 'audio-misc.json',
@@ -44,8 +46,8 @@ jQuery(document).ready(function ($) {
         this.domNodes = {
             home: document.querySelector('#controller [data-id="fa-home"] .fa-button'),
             over: document.querySelector('#controller [data-id="fa-over"] .fa-button'),
-            img: document.querySelector('#surface .cover img'),
             name: document.querySelector('#detail .name'),
+            album: document.querySelector('#surface .album'),
             magic: document.querySelector('#surface .magic'),
             artists: document.querySelector('#detail .artists'),
             elapsed: document.querySelector('#thread .elapsed'),
@@ -53,6 +55,7 @@ jQuery(document).ready(function ($) {
             faMagic: document.querySelector('#surface .magic .fa')
         };
         this.tried = 0;
+        this.image = new Image();
         this.audio = document.createElement('audio');
         this.audio.volume = this.config.volume;
         this.decorator();
@@ -76,6 +79,8 @@ jQuery(document).ready(function ($) {
     $.extend(ZzzFM.prototype, {
 
         decorator: function () {
+            this.createAlbum();
+            this.addAlbumEvents();
             this.getLatestData();
             this.loadAudioMisc();
             this.addAudioEvents();
@@ -196,7 +201,7 @@ jQuery(document).ready(function ($) {
             if ($.isPlainObject(song)) {
                 if (song['url']) {
                     this.tried = 0;
-                    this.domNodes.img.src = this.getImagePackage(song['album']['picUrl']);
+                    this.image.src = this.getImagePackage(song['album']['picUrl']);
                     this.domNodes.name.textContent = song['name'];
                     this.domNodes.artists.textContent = song['artists'];
                     this.audio.src = song['url'];
@@ -342,14 +347,77 @@ jQuery(document).ready(function ($) {
             this.getHyperIDs(id);
         },
 
+        /**
+         * @recursion
+         */
+        createAlbum: function (src) {
+            this.image.src = typeof src === 'string' ? src : this.config.localAlbum;
+        },
+
+        requestAlbumRotate: function () {
+            var ANIMATION_FPS = 60;
+            var ONE_TURN_TIME = 30;
+            var ONE_TURN = Math.PI * 2;
+            var MAX_EACH_FRAME_TIME = 1000 / 50;
+            var EACH_FRAME_RADIAN = 1 / (ANIMATION_FPS * ONE_TURN_TIME) * ONE_TURN;
+
+            var context = this.domNodes.album.getContext('2d');
+            var prevTimestamp = 0;
+            var loopAnimation = (function (timestamp) {
+                var MAX_LENGTH = Math.max(this.domNodes.album.width, this.domNodes.album.height);
+                var HALF_LENGTH = MAX_LENGTH / 2;
+
+                prevTimestamp && timestamp - prevTimestamp > MAX_EACH_FRAME_TIME && console.warn(timestamp - prevTimestamp);
+                prevTimestamp = timestamp;
+
+                context.translate(HALF_LENGTH, HALF_LENGTH);
+                context.rotate(EACH_FRAME_RADIAN);
+                context.translate(-HALF_LENGTH, -HALF_LENGTH);
+                context.clearRect(0, 0, MAX_LENGTH, MAX_LENGTH);
+                context.fill();
+
+                if (this.audio.paused) {
+                    this.recursion.requestID && window.cancelAnimationFrame(this.recursion.requestID);
+                } else {
+                    this.recursion.requestID = window.requestAnimationFrame(loopAnimation);
+                }
+            }).bind(this);
+
+            // In slow network, `this.requestAlbumRotate` will be trigger many times.
+            // So we should run `cancelAnimationFrame` firstly.
+            this.recursion.requestID && window.cancelAnimationFrame(this.recursion.requestID);
+            this.recursion.requestID = window.requestAnimationFrame(loopAnimation);
+        },
+
+        addAlbumEvents: function () {
+            $(this.image).on({
+                'load': function (e) {
+                    var ONE_TURN = Math.PI * 2;
+                    var MAX_LENGTH = Math.max(e.data.image.width, e.data.image.height);
+                    var HALF_LENGTH = MAX_LENGTH / 2;
+
+                    var canvas = e.data.domNodes.album;
+                    var context = canvas.getContext('2d');
+
+                    canvas.width = canvas.height = MAX_LENGTH;
+                    context.fillStyle = context.createPattern(e.data.image, 'no-repeat');
+                    context.arc(HALF_LENGTH, HALF_LENGTH, HALF_LENGTH, 0, ONE_TURN);
+                    context.clearRect(0, 0, MAX_LENGTH, MAX_LENGTH);
+                    context.fill();
+                },
+                'error': function (e) {
+                    this.src !== e.data.config.localAlbum && e.data.createAlbum(e.data.config.localAlbum);
+                }
+            }, this);
+        },
+
         addAudioEvents: function () {
             $(this.audio).on({
                 'playing': function (e) {
-                    $(e.data.domNodes.surface).attr('data-running', !e.data.audio.paused);
+                    e.data.requestAlbumRotate();
                     $(e.data.domNodes.faMagic).removeClass('fa-play').addClass('fa-pause');
                 },
                 'pause': function (e) {
-                    $(e.data.domNodes.surface).attr('data-running', !e.data.audio.paused);
                     $(e.data.domNodes.faMagic).removeClass('fa-pause').addClass('fa-play');
                 },
                 'ended': function (e) {
@@ -386,10 +454,6 @@ jQuery(document).ready(function ($) {
 
             $(this.domNodes.magic).on('click', this, function (e) {
                 e.data.audio.paused ? e.data.playAudio() : e.data.pauseAudio();
-            });
-
-            $(this.domNodes.img).on('error', function () {
-                this.src = $(this).attr('data-src');
             });
         }
 

@@ -129,23 +129,13 @@ template {
     max-width: 100%;
     width: 100%;
     height: 0;
-    overflow: hidden;
-    border-radius: 50%;
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
-    -webkit-animation: rotate 30s linear infinite backwards;
-    -webkit-animation-play-state: paused;
-    animation: rotate 30s linear infinite backwards;
-    animation-play-state: paused;
 }
 
-#surface[data-running="true"] .cover {
-    -webkit-animation-play-state: running;
-    animation-play-state: running;
-}
-
-#surface img {
-    max-width: 100%;
+#surface .album {
     width: 100%;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
 }
 
 #surface .magic {
@@ -219,17 +209,6 @@ template {
 
 #detail .name::before { content: "\300c"; }
 #detail .name::after { content: "\300d"; }
-
-
-@-webkit-keyframes rotate {
-    from { -webkit-transform: rotate(0deg) }
-    to { -webkit-transform: rotate(360deg) }
-}
-
-@keyframes rotate {
-    from { transform: rotate(0deg) }
-    to { transform: rotate(360deg) }
-}
 
 
 /* Global Media Queries */
