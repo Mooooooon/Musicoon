@@ -79,6 +79,4 @@ if ($lrc_info["tlyric"] != "") {
 $play_info["id"] = $id;
 
 header('Content-type: application/json; charset=UTF-8');
-//echo json_encode($lrc_info,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
 echo json_encode($play_info,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
-//echo json_encode($cover_info,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
