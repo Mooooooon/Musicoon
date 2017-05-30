@@ -359,4 +359,3 @@ function display_lrc() {
     play_time = Math.floor(oAudio.currentTime).toString();
     lrc_row.html(lrc[play_time]);
 }
->>>>>>> upstream/master
