@@ -1,0 +1,194 @@
+﻿.back {
+    background: url(../images/bgimg.jpg) no-repeat right;
+    background-size: auto 100%;
+    width: 100%;
+    height: 100%;
+    opacity: 0.25;
+    position: fixed
+}
+
+.player {
+    position: fixed;
+    top: 5%;
+    right: 50%;
+    width: 300px;
+    height: 100%;
+    margin: 0 auto 0;
+}
+
+.cd {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.out {
+    float: left;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    border-radius: 50%;
+}
+
+.in {
+    float: left;
+    width: 16%;
+    height: 16%;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    margin-left: 42%;
+    margin-top: -58%;
+    z-index: 2;
+}
+
+@-webkit-keyframes rotate {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-moz-keyframes rotate {
+    from {
+        -moz-transform: rotate(0deg);
+    }
+    to {
+        -moz-transform: rotate(360deg);
+    }
+}
+
+#album {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 50%;
+    float: left;
+    width: 80%;
+    height: 80%;
+    background-color: #000000;
+    border-radius: 50%;
+    margin-left: 10%;
+    margin-top: -90%;
+    z-index: 1;
+}
+
+.roll {
+    animation-name: rotate;
+    animation-duration: 60s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    -moz-animation-name: rotate;
+    -moz-animation-duration: 60s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    -webkit-animation-name: rotate;
+    -webkit-animation-duration: 60s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+}
+
+.action {
+    margin-bottom: 1.022%;
+    height: 2.5%;
+    text-align: center;
+}
+
+.action img {
+    height: 1rem;
+    width: 1rem;
+    margin-left: 7px;
+    margin-right: 7px;
+    margin-top: 2px;
+}
+
+#range {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+input[type="range"] {
+    appearance: none;
+    -moz-appearance: none; /* Firefox */
+    -webkit-appearance: none; /* Safari 和 Chrome */
+    -webkit-box-shadow: 0 1px 0 0px #424242,
+    0 1px 0 #060607 inset,
+    0px 2px 10px 0px black inset,
+    1px 0px 2px rgba(0, 0, 0, 0.4) inset,
+    0 0px 1px rgba(0, 0, 0, 0.6) inset;
+    position: relative;
+    bottom: 3px;
+    background-color: #0F0F0F;
+    border-radius: 5px;
+    height: 5px;
+    width: 75px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    cursor: default;
+    top: 1px;
+    height: 12px;
+    width: 12px;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 50%;
+    -webkit-box-shadow: 0 -1px 1px black inset;
+}
+
+.info {
+    font-family: "Times New Roman", "Meiryo";
+    font-weight: bold;
+    font-size: 1.5rem;
+    line-height: 1.5em;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.info #artist {
+    font-family: "华文细黑", "黑体";
+    font-size: 0.5em;
+    margin-left: 1em;
+}
+
+.lrc {
+    font-family: "Times New Roman", "Meiryo";
+    font-size: 1rem;
+    line-height: 1.3rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+.tlrc {
+    font-family: "华文细黑", "黑体";
+    font-size: 0.7rem;
+    line-height: 1.3rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+a {
+	color: #333;
+	text-decoration: none;
+	padding: 5px;
+}
+
+a:hover,
+a:focus {
+	color: #707070;
+	color: rgba(51, 51, 51, 0.7);
+}
+
+@media screen and (max-width: 721px) {
+.back {
+    background: white;
+}
+.player {
+    position: relative;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 500px;
+    margin: 0 auto 0;
+}
+}
