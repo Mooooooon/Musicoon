@@ -2,7 +2,19 @@ Musicoon
 ========
 私人电台
 
-Changed API to Meting<br>
-Changed images to Arai-san & Fennic<br>
-Used fontawesome<br>
+如果您想更换歌单的话，请到src/playlist.php里找到：
+
+`$result0 = $api->format(true)->playlist('122732544');`
+
+将里面的数字改成您想播放的歌单的id（当然，是netease的）
+由于加入了fontawesome，在使用的时候请您自行把index.html里面的
+
+`<link rel="stylesheet" href="/icons/css/font-awesome.min.css">`
+
+这一行改成您要引用字体的css文件。
+
+Changed API to Meting
+Changed background-image to Arai-san & Fennic
+Used fontawesome 
+
 Enjoy it :)
