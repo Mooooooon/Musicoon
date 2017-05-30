@@ -6,7 +6,9 @@ Musicoon
 
 `$result0 = $api->format(true)->playlist('122732544');`
 
-将里面的数字改成您想播放的歌单的id（当然，是netease的）<br>
+将里面的数字改成您想播放的歌单的id（当然，是netease的）
+
+相应地，下面的内容应该也可以改变。我相信能够找到这里的人水平肯定都比我高，所以我就不细说了<br>
 
 由于加入了fontawesome，在使用的时候请您自行把index.html里面的
 
