@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /**
  * Created by Moon on 2014/12/4 0004.
  * Modified by D-Bood on 2017/05/25 1947.
