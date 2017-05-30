@@ -1,4 +1,6 @@
 Changed API to Meting
+Changed images to Arai-san & Fennic
+Used fontawesome
 Enjoy it :)
 
 Musicoon
