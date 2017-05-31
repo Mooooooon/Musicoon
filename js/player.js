@@ -36,7 +36,7 @@ $(document).ready(function () {
 		});
 
 		$('ul').on('click', 'li', function (e) {
-			m_play();
+			pause();;
 			if ($('li').css("background-color", "#bfbfbf")) {
 				$('li').css(
 					{"background-color": "","font-weight": "","color": "#000"});
@@ -119,14 +119,20 @@ $(window).resize(function () {
 });
 
 $("#player").bind("ended", function () {
-	if (lrc != "no") {
+	if (lrc != "") {
 		clearInterval(lrc_interval);
 	}
-	if (tlrc != "no") {
+	if (tlrc != "") {
 		clearInterval(tlrc_interval);
 	}
 	next_music();
 });
+function pause() {
+        oAudio.pause();
+        btn.attr({"class": "fa fa-play fa-lg","title": "播放"});
+        album.removeClass("roll");
+        inn.removeClass("roll");
+}
 
 function m_play() {
 	if (oAudio.paused) {
@@ -134,23 +140,20 @@ function m_play() {
 		btn.attr({"class": "fa fa-pause fa-lg","title": "暂停"});
 		album.addClass("roll");
 		inn.addClass("roll");
-		if (lrc != "no") {
+		if (lrc != "") {
 			lrc_interval = setInterval("display_lrc()", 500);
 		}
-		if (tlrc != "no") {
+		if (tlrc != "") {
 			tlrc_interval = setInterval("display_tlrc()", 500);
 		}
 	} else if (oAudio.play) {
-		oAudio.pause();
-		btn.attr({"class": "fa fa-play fa-lg","title": "播放"});
-		album.removeClass("roll");
-		inn.removeClass("roll");
-		if (lrc != "no") {
-			clearInterval(lrc_interval);
-		}
-		if (tlrc != "no") {
-			clearInterval(tlrc_interval);
-		}
+		pause();
+        	if (lrc != "") {
+                	clearInterval(lrc_interval);
+        	}
+        	if (tlrc != "") {
+                	clearInterval(tlrc_interval);
+        	}
 	}
 }
 
@@ -158,7 +161,7 @@ function next_music() {
 	oAudio.pause();
 	album.removeClass("roll");
 	inn.removeClass("roll");
-	if (!oAudio.paused && lrc != "no") {
+	if (!oAudio.paused && lrc != "") {
 		clearInterval(lrc_interval);
 		clearInterval(tlrc_interval);
 	}
