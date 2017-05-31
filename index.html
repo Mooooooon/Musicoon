@@ -1,38 +1,77 @@
-<!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>Muscioon</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-<div class="back">
-    <div class="container">
-        <div class="player">
-            <div id="cd" class="cd">
-                <div class="out">
-                </div>
-                <div id="album" class="album">
-                </div>
-                <div id="in" class="in">
-                </div>
-            </div>
-            <div class="action">
-                <a href="javascript:m_play()"><img id="m_play" src="images/play.png"></a>
-                <input id="range" type="range" min="0" max="10" value="5" onchange="volume(this.value)">
-                <a href="javascript:next_music()"><img id="next_music" src="images/forward.png"></a>
-            </div>
-            <div class="info">
-                <span id="music_name"></span><span id="artist"></span>
-            </div>
-            <div id="lrc" class="lrc">
-            </div>
+    <header>
+    </header>
+    <body>
+        <link rel="stylesheet" href="css/playlist.css">
+	<link rel="stylesheet" href="/icons/css/font-awesome.min.css">
+        <script src="js/jquery-3.2.1.min.js" type="text/javascript">
+        </script>
+        <link rel="stylesheet" href="css/player.css">
+        <link rel="stylesheet" href="css/progressbar.css">
+        <div class="back">
         </div>
-    </div>
-</div>
-<audio id="player">
-</audio>
-<script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
-<script src="js/player.js" type="text/javascript"></script>
-</body>
+        <div id="container">
+            <div class="player">
+                <div id="cd" class="cd">
+                    <div class="out">
+                    </div>
+                    <div id="album" class="album">
+                    </div>
+                    <div id="in" class="in">
+                    </div>
+                </div>
+		<div id="slider"></div>
+                <div id="scrollBar">
+                    <div id="scroll_Buffered">
+                    </div>
+                    <div id="scroll_Track">
+                    </div>
+                    <div id="scroll_Thumb" draggable="true">
+                    </div>
+                </div>
+                <div class="toolBar">
+                    <a href="javascript:rewindAudio()">
+                        <i id="rewindAudio" class="fa fa-backward fa-lg" title="-10s" aria-hidden="true"></i>
+                    </a>
+                    <div id="scrollBarTxt">
+                    </div>
+                    <a href="javascript:forwardAudio()">
+                        <i id="forwardAudio" class="fa fa-forward fa-lg" title="+10s" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="action">
+                    <a href="javascript:playMode()">
+                        <i id="mode" class="fa fa-align-justify fa-lg" title="列表循环" aria-hidden="true"></i>
+                    <a href="javascript:m_play()">
+                        <i id="m_play" class="fa fa-play fa-lg" title="播放" aria-hidden="true"></i>
+                    </a>
+                    <a href="javascript:next_music()">
+                        <i id="next_music" class="fa fa-step-forward fa-lg" title="下一首" aria-hidden="true"></i>
+                    </a>
+                    <a href="javascript:mute()">
+                        <i id="vol" class="fa fa-volume-up fa-lg" title="点击即可静音" aria-hidden="true"></i>
+                    </a>
+                    <input id="range" type="range" min="0" max="100" value="50" onchange="volume(this.value)">
+                </div>
+                <div class="info">
+                    <span id="music_name">
+                    </span>
+                    <span id="artist">
+                    </span>
+                </div>
+                <div id="lrc" class="lrc">
+                </div>
+                <div id="tlrc" class="tlrc">
+                </div>
+            </div>
+            <ul id="playList">
+            </ul>
+        </div>
+        <audio id="player">
+        </audio>
+        <script src="js/player.js" type="text/javascript">
+        </script>
+        <script src="js/progressbar.js" type="text/javascript">
+        </script>
+    </body>
 </html>

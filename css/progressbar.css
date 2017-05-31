@@ -1,0 +1,68 @@
+#Main {
+	width: 70%;
+	height: 300px;
+	margin: 0 auto;
+	margin-top: 10px;
+}
+#scrollBar {
+	width: 16rem;
+	height: 10px;
+	background-color: #ccc;
+	margin: 25px auto;
+	-webkit-border-radius: 2em;
+	-moz-border-radius: 2em;
+	border-radius: 10px;
+}
+#scroll_Track {
+	width: 0px;
+	height: 10px;
+	background-color: #333;
+	-webkit-border-radius: 2em;
+	-moz-border-radius: 2em;
+	border-radius: 10px;
+	position: relative;
+	top: -10px;
+}
+#scroll_Buffered {
+        width: 0px;
+        height: 10px;
+        background-color: #999;
+        -webkit-border-radius: 2em;
+        -moz-border-radius: 2em;
+        border-radius: 10px;
+}
+#scroll_Thumb {
+    left: -10px;
+    width: 20px;
+    height: 20px;
+    background-color: #000;
+    -webkit-border-radius: 2em;
+    -moz-border-radius: 2em;
+    border-radius: 51%;
+    border: 1px solid #ffffff;
+    top: -26px;
+    opacity: 1;
+    position: relative;
+}
+#scroll_Thumb:hover {
+	background-color: #333;
+	border: 1px solid #fff;
+}
+#scrollBarTxt {
+    display: inline-block;
+    font-family: fantasy;
+    text-align: center;
+    width: 100px;
+    position: relative;
+    margin: 0 auto 0;
+}
+.toolBar {
+    display: block;
+    position: relative;
+    margin: 10px auto 10px;
+    text-align: center;
+}
+
+@media screen and (max-width:721px) {
+
+}
