@@ -7,5 +7,3 @@ Musicoon
 
 #### 声明
 感谢glyphicons.com提供的免费图标
-
-[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
